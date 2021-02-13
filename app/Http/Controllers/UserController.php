@@ -10,6 +10,21 @@ use Illuminate\Foundation\Auth\User;
 
 class UserController extends Controller
 {
+
+    public function uploadeAvater(Request $request){
+        if($request->hasFile('image')){
+           $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images', $filename,'public');
+            $save = User::find(1);
+            $save->avatar = $filename;
+            $save->save();
+        }
+        return redirect()->back();
+        // $request->image->store('images','public');
+        // User::find(1)->update(['avatar'=>'asdfsd']);
+      
+    }
+
     public function index()
     {
         // DB:: insert('insert into users (name,email,password)
